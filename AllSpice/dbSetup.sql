@@ -38,3 +38,8 @@ CREATE TABLE
         Foreign Key (accountId) REFERENCES accounts (id) ON DELETE CASCADE,
         Foreign Key (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
+
+    INSERT INTO recipes
+    (title, instructions, img, category, creatorId)
+    VALUES
+    ()
