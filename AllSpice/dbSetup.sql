@@ -25,10 +25,12 @@ CREATE TABLE
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
         name VARCHAR(255) NOT NULL COMMENT 'Ingredient Name',
-        quantity INT NOT NULL COMMENT 'Ingredient Quantity',
+        quantity VARCHAR(255) NOT NULL COMMENT 'Ingredient Quantity',
         reciepeId INT NOT NULL COMMENT 'Reciepe Id',
         Foreign Key (reciepeId) REFERENCES recipes (id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
+
+    DROP TABLE ingredients;
 
 CREATE TABLE
     favorites(
