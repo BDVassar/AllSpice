@@ -31,13 +31,28 @@ public class RecipesController : ControllerBase
       return BadRequest(e.Message);
     }
   }
-[HttpGet]
+  [HttpGet]
   public ActionResult<List<Recipe>> Get()
   {
-    try 
+    try
     {
       List<Recipe> recipes = _recipesService.Get();
       return recipes;
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+
+  [HttpGet("{id}")]
+  public async Task<ActionResult<Recipe>> GetOne(int id)
+  {
+    try
+    {
+      Account userInfo = await _auth0provider.GetUserInfoAsync<Account>(HttpContext);
+      Recipe recipe = _recipesService.GetOne(userInfo?.Id, id);
+      return Ok(recipe);
     }
     catch (Exception e)
     {

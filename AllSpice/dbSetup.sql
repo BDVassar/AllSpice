@@ -45,3 +45,5 @@ CREATE TABLE
     (title, instructions, img, category, creatorId)
     VALUES
     ()
+
+    
