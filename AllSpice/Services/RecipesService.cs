@@ -15,22 +15,41 @@ public class RecipesService
     return recipe;
   }
 
+
   internal List<Recipe> Get()
   {
     List<Recipe> recipes = _repo.Get();
     return recipes;
   }
 
-  internal Recipe GetOne(string userId,int id)
+  internal Recipe GetOne(int id)
   {
     Recipe recipe = _repo.GetOne(id);
-    if (recipe == null){
+    if (recipe == null)
+    {
       throw new Exception("no recipe by that id.");
     }
-    if (recipe.creatorId != userId){
-      throw new Exception ("you do not have access to this Recipe.");
-    }
+
     return recipe;
-    
+
+  }
+  internal Recipe EditRecipe(Recipe recipeData, string userId, int id)
+  {
+    Recipe originalRecipe = this.GetOne(id);
+    if (originalRecipe.creatorId != userId)
+    {
+      throw new Exception("you do not have access to this Recipe.");
+    }
+    originalRecipe.title = recipeData.title ?? originalRecipe.title;
+    originalRecipe.instructions = recipeData.instructions ?? originalRecipe.instructions;
+    originalRecipe.img = recipeData.img ?? originalRecipe.img;
+    originalRecipe.category = recipeData.category ?? originalRecipe.category;
+
+    Boolean updated = _repo.EditRecipe(originalRecipe);
+    if (updated == false)
+    {
+      throw new Exception("The recipe was not updated");
+    }
+    return originalRecipe;
   }
 }

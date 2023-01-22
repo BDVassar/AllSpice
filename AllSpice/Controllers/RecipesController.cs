@@ -46,13 +46,29 @@ public class RecipesController : ControllerBase
   }
 
   [HttpGet("{id}")]
-  public async Task<ActionResult<Recipe>> GetOne(int id)
+  public ActionResult<Recipe> GetOne(int id)
+  {
+    try
+    {
+
+      Recipe recipe = _recipesService.GetOne(id);
+      return Ok(recipe);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+  [HttpPut("{id}")]
+  [Authorize]
+  public async Task<ActionResult<Recipe>> EditRecipe([FromBody] Recipe recipeData, int id)
   {
     try
     {
       Account userInfo = await _auth0provider.GetUserInfoAsync<Account>(HttpContext);
-      Recipe recipe = _recipesService.GetOne(userInfo?.Id, id);
-      return Ok(recipe);
+
+      Recipe recipe = _recipesService.EditRecipe(recipeData, userInfo?.Id, id);
+      return recipe;
     }
     catch (Exception e)
     {
