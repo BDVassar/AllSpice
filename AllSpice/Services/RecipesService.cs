@@ -52,4 +52,15 @@ public class RecipesService
     }
     return originalRecipe;
   }
+
+  internal string RemoveRecipe(int recipeId, string userId)
+  {
+    Recipe original = this.GetOne(recipeId);
+    if (original.creatorId != userId)
+    {
+      throw new Exception("you do not have access to this Recipe.");
+    }
+    _repo.RemoveRecipe(recipeId);
+    return $"{original.title} was deleted";
+  }
 }

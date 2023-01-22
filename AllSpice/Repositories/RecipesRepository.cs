@@ -73,4 +73,13 @@ public class RecipesRepository
     int rows = _db.Execute(sql, originalRecipe);
     return rows > 0;
   }
+
+  internal void RemoveRecipe(int id)
+  {
+    string sql = @"
+    DELETE FROM recipes
+    WHERE id = @id;
+    ";
+    _db.Execute(sql, new { id });
+  }
 }
