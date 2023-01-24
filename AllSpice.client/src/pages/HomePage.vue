@@ -1,5 +1,14 @@
 <template>
   <div class="container">
+    <section class="row justify-content-center">
+      <div class="col-5 rounded p-0" style="background-color: #f8f9fa">
+        <section class="row justify-content-center p-0 m-2 gap-3">
+          <button class="btn btn-light col-3"> Home</button>
+          <button class="btn btn-light col-3">My Recipes</button>
+          <button class="btn btn-light col-3">Favorites</button>
+        </section>
+      </div>
+    </section>
     <section class="row">
       <div v-for="r in recipes" class="col-4">
         <RecipeCard :recipe="r" />
@@ -56,5 +65,6 @@ export default {
       object-position: center;
     }
   }
+
 }
 </style>

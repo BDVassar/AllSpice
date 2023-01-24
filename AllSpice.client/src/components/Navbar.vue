@@ -1,5 +1,5 @@
 <template>
-  <div class="container m-4 rounded p-0" id="background">
+  <div class="container elevation-5  rounded p-0" id="background">
     <section class="row justify-content-end">
       <div class="col-3 p-2 d-flex justify-content-center align-items-center">
         <form action="">
@@ -38,6 +38,7 @@ export default {
 <style scoped>
 #background {
   height: 350px;
+  width: 100%;
   background-image: url("https://s3-alpha-sig.figma.com/img/137d/d14c/aa93e0df14a805e8e10c9f1221ba5131?Expires=1675641600&Signature=Nf8-ly9zYPkUxBGJrOoGuGV1AubHpks5Rx8bm5M0lRjsr1hWttGmgnVRNvFK7K9kVCvqhMdEnuzdbEDtl2a-HDs1ttFmIfoe6SdJQh~Zny7viHvh44IAfDdrI0tz7ZObyvWSGWnsoK2WF6VZRSc6arxiLKZMB8zo86bp5HAeDQ61ZG0SWRnu3z5vWuh9bnEWY2Xm-Er8K~~5PcMct~OdWe7dMDi7ckcxgTMGPKXHyHDMFH5BGGxI1kc7-mUJFitZ~sNZJnojoLPOpm8hYMIzVoGCoogm6EcWWQIkYu5eoYM47rrR1707eCGeUIn6ymFUZi18-afC2udj0yLle-wSiw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4");
   background-position: top;
   background-size: cover;
