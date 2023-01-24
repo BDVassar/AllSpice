@@ -10,11 +10,14 @@
       </div>
     </section>
     <section class="row">
-      <div v-for="r in recipes" class="col-4">
+      <div v-for="r in recipes" class="col-4" data-bs-toggle="modal" data-bs-target="#recipeDetails">
         <RecipeCard :recipe="r" />
       </div>
     </section>
   </div>
+  <ModalComponent id="recipeDetails">
+    <RecipeDetails />
+  </ModalComponent>
 </template>
 
 <script>

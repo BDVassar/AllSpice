@@ -1,7 +1,8 @@
 <template>
   <section v-if="recipe" class="row cardblur m-4 rounded" :style="{ backgroundImage: `url('${recipe.img}')`, }">
     <div class="col-12">
-      <section class="row p-3 cardheight rounded elevation-5" :style="{ backgroundImage: `url('${recipe.img}')` }">
+      <section @click="SetActiveRecipe(recipe.id)" class="row p-3 cardheight selectable rounded elevation-5"
+        :style="{ backgroundImage: `url('${recipe.img}')` }">
         <div class="col-12 d-flex flex-column justify-content-between">
           <section class="row justify-content-between">
             <div class="col-4 text-center text-light bluredbackground rounded-pill">
@@ -27,12 +28,24 @@
 <script>
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
+import Pop from "../utils/Pop.js";
+import { logger } from "../utils/Logger.js";
+import { recipesService } from "../services/RecipesService.js";
 export default {
   props: {
     recipe: { type: Object, require: true }
   },
   setup() {
-    return {}
+    return {
+      async SetActiveRecipe(recipeId){
+        try {
+          recipesService.SetActiveRecipe(recipeId);
+        } catch (error) {
+          Pop.error(error)
+          logger.log(error)
+        }
+      }
+    }
   }
 };
 </script>
