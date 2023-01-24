@@ -1,23 +1,33 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace AllSpice.Services;
 
 public class FavoritesService
 {
-    private readonly FavoritesRepository _favoritesrepository;
+  private readonly FavoritesRepository _favoritesRepository;
 
-  public FavoritesService(FavoritesRepository favoritesrepository)
+  public FavoritesService(FavoritesRepository favoritesRepository)
   {
-    _favoritesrepository = favoritesrepository;
+    _favoritesRepository = favoritesRepository;
   }
 
   internal Favorite Create(Favorite favoriteData)
   {
-    int id = _favoritesrepository.Create(favoriteData);
+    int id = _favoritesRepository.Create(favoriteData);
     favoriteData.id = id;
     return favoriteData;
+  }
+
+  internal List<FavoriteRecipe> GetMyFavorites(string id)
+  {
+    List<FavoriteRecipe> favorites = _favoritesRepository.GetMyFavorites(id);
+    return favorites;
+  }
+
+  internal string Remove(int id, string accountId)
+  {
+    bool deleted = _favoritesRepository.Remove(id);
+    if (deleted == false){
+      throw new Exception("Favorite not deleted.");
+    }
+    return "Favorite was deleted";
   }
 }
