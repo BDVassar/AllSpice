@@ -6,7 +6,7 @@
           <router-link :to="{ name: 'Home' }" class="col-3">
             <button class="btn btn-white"> Home</button>
           </router-link>
-          <button class="btn btn-light col-3">Edit</button>
+          <button class="btn btn-light col-3 " data-bs-toggle="modal" data-bs-target="#editAccountForm">Edit</button>
         </section>
       </div>
     </section>
@@ -16,6 +16,9 @@
       <p>{{ account.email }}</p>
     </div>
   </div>
+  <ModalComponent id="editAccountForm">
+    <EditAccountForm />
+  </ModalComponent>
 </template>
 
 <script>
@@ -24,7 +27,7 @@ import { AppState } from '../AppState'
 export default {
   setup() {
     return {
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
     }
   }
 }

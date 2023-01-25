@@ -21,6 +21,8 @@ class RecipesService {
     logger.log('[Getting Ingredients]', res.data);
     AppState.activeIngredients = res.data;
   }
+
+
 }
 
 export const recipesService = new RecipesService();
