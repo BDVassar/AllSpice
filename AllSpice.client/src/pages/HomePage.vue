@@ -14,9 +14,19 @@
         <RecipeCard :recipe="r" />
       </div>
     </section>
+    <section class="row sticky-bottom justify-content-end pb-4">
+      <div class="col-1">
+        <button class="btn btn-success rounded-circle mdi mdi-plus addheight" data-bs-toggle="modal"
+          data-bs-target="#addRecipe"></button>
+      </div>
+    </section>
   </div>
   <ModalComponent id="recipeDetails">
     <RecipeDetails />
+  </ModalComponent>
+  
+  <ModalComponent id="addRecipe">
+    <AddRecipeForm />
   </ModalComponent>
 </template>
 
@@ -57,7 +67,7 @@ export default {
         }
       },
 
-      async GetMyFavorites(){
+      async GetMyFavorites() {
         try {
           await accountService.GetMyFavorites()
         } catch (error) {
@@ -73,5 +83,12 @@ export default {
 <style scoped lang="scss">
 .move-up {
   transform: translateY(-3vh);
+}
+
+.addheight {
+  height: 10vh;
+  width: 10vh;
+  font-size: 5vh;
+  transform: translateX(2vh);
 }
 </style>

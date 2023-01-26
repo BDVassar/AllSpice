@@ -7,8 +7,9 @@
         </div>
         <div class="col-8">
           <section class="row justify-content-end">
-            <div class="col-1">
-              <button type="button" class="btn btn-link text-danger mdi mdi-close" data-bs-dismiss="modal"></button>
+            <div v-if="recipe.creatorId == account.id" class="col-1">
+              <button @click="RemoveRecipe(recipe.id)" type="button" class="btn btn-link text-danger mdi mdi-delete"
+                data-bs-dismiss="modal"></button>
             </div>
           </section>
           <section class="row">
@@ -28,6 +29,22 @@
               <section class="row">
                 <div v-for="i in ingredients" class="col-12">
                   <IngredientsComponent :ingredient="i" />
+                  <section class="row py-4">
+                    <form @submit.prevent="createIngredient()" class="form-floating">
+                      <div class="input-group mb-3">
+                        <input v-model="ingredientData.name" type="text" class="form-control"
+                          placeholder="Ingredient Name" aria-label="Ingredient" aria-describedby="button-addon2">
+                      </div>
+                      <div class="input-group mb-3">
+                        <input v-model="ingredientData.quantity" type="text" class="form-control" placeholder="Quantity"
+                          aria-label="Quantity" aria-describedby="button-addon2">
+                      </div>
+                      <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-secondary mdi mdi-plus" type="submit"
+                          id="button-addon2"></button>
+                      </div>
+                    </form>
+                  </section>
                 </div>
               </section>
             </div>
@@ -44,28 +61,41 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+import { computed, reactive, onMounted, ref } from 'vue';
 import Pop from "../utils/Pop.js";
 import { logger } from "../utils/Logger.js";
 import { recipesService } from "../services/RecipesService.js";
+import { ingredientsService } from "../services/IngredientsService.js";
 export default {
   setup() {
-    // async function getIngredients(){
-    //   try {
-    //     recipesService.getIngredients();
-    //   } catch (error) {
-    //     Pop.error(error);
-    //     logger.log(error);
-    //   }
-    // }
+    const ingredientData = new ref({})
 
     onMounted(() => {
-      // getIngredients()
     })
 
     return {
+      ingredientData,
       recipe: computed(() => AppState.activeRecipe),
-      ingredients: computed(() => AppState.activeIngredients)
+      ingredients: computed(() => AppState.activeIngredients),
+      account: computed(() => AppState.account),
+
+      async RemoveRecipe(recipeId) {
+        try {
+          let message = await recipesService.RemoveRecipe(recipeId)
+        } catch (error) {
+          Pop.error(error);
+          logger.log(error);
+        }
+      },
+      
+      async createIngredient() {
+        try {
+          await ingredientsService.createIngredient(ingredientData.value);
+        } catch (error) {
+          Pop.error(error);
+          logger.error(error);
+        }
+      }
     }
   }
 };
@@ -77,7 +107,7 @@ export default {
   background-color: #527360;
 }
 
-.dataRow{
+.dataRow {
   height: 100%;
 }
 </style>

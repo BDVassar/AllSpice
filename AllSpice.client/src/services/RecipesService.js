@@ -4,6 +4,12 @@ import { api } from "./AxiosService.js";
 
 class RecipesService {
 
+  async createRecipe(recipeData) {
+    const res = await api.post('api/recipes', recipeData);
+    logger.log('[Recipe Created', res.data);
+    AppState.recipes.push(res.data);
+    AppState.activeRecipe = res.data;
+  }
   async GetRecipes() {
     const res = await api.get('api/recipes')
     // logger.log('[Getting Recipes]', res.data)
@@ -21,8 +27,12 @@ class RecipesService {
     // logger.log('[Getting Ingredients]', res.data);
     AppState.activeIngredients = res.data;
   }
-
-
+  async RemoveRecipe(recipeId) {
+    const res = await api.delete('api/recipes/' + recipeId)
+    logger.log('[Deleted Recipe]', res.data)
+    let index = AppState.recipes.findIndex((r) => r.id == recipeId)
+    AppState.recipes.splice(index, 1)
+  }
 }
 
 export const recipesService = new RecipesService();
